@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useHref } from 'react-router-dom'
 import { X } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion' // eslint-disable-line no-unused-vars
 import { navLinks } from '@/data/navigation'
@@ -7,6 +7,10 @@ import { useEffect } from 'react'
 
 export default function MobileMenu({ open, onClose }) {
   const location = useLocation()
+  const href = useHref(location.pathname)
+  
+  // Get the pathname without basename for comparison
+  const normalizedPathname = location.pathname.replace('/liferootsciences', '') || '/'
 
   useEffect(() => {
     if (open) {
@@ -20,8 +24,10 @@ export default function MobileMenu({ open, onClose }) {
   }, [open])
 
   useEffect(() => {
-    onClose()
-  }, [location.pathname, onClose])
+    if (open) {
+      onClose()
+    }
+  }, [location.pathname]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <AnimatePresence>
@@ -63,7 +69,7 @@ export default function MobileMenu({ open, onClose }) {
                   <Link
                     to={link.path}
                     className={`block rounded-lg px-4 py-3 text-base font-medium transition-colors ${
-                      location.pathname === link.path
+                      normalizedPathname === link.path
                         ? 'bg-neutral-100 text-secondary'
                         : 'text-neutral-700 hover:bg-neutral-50'
                     }`}

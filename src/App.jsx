@@ -9,7 +9,7 @@ import Contact from '@/pages/Contact'
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/liferootsciences">
       <Routes>
         <Route element={<Layout />}>
           <Route index element={<Home />} />

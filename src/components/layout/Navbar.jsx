@@ -12,6 +12,9 @@ export default function Navbar() {
   const scrollY = useScrollPosition()
   const location = useLocation()
   const scrolled = scrollY > 20
+  
+  // Normalize pathname by removing basename for comparison
+  const normalizedPathname = location.pathname.replace('/liferootsciences', '') || '/'
 
   return (
     <header
@@ -38,7 +41,7 @@ export default function Navbar() {
                 key={link.path}
                 to={link.path}
                 className={`rounded-md px-3 py-2 text-sm font-medium transition-colors ${
-                  location.pathname === link.path
+                  normalizedPathname === link.path
                     ? 'text-secondary'
                     : 'text-neutral-600 hover:text-primary'
                 }`}
