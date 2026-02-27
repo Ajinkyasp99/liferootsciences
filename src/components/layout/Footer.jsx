@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import Container from '@/components/common/Container'
 import { siteConfig } from '@/data/siteConfig'
 import { navLinks } from '@/data/navigation'
-
+// 
 export default function Footer() {
   return (
     <footer className="bg-primary text-white">
