@@ -1,16 +1,19 @@
 import Container from '@/components/common/Container'
 import Button from '@/components/common/Button'
 import AnimatedSection from '@/components/common/AnimatedSection'
+import AnimatedBackground from '@/components/home/AnimatedBackground'
 import { ArrowRight, FlaskConical, HeartPulse, Pill } from 'lucide-react'
 
 function HeroSection() {
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-primary via-primary-light to-primary py-24 sm:py-32 lg:py-40">
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-20 left-10 h-72 w-72 rounded-full bg-secondary blur-3xl" />
-        <div className="absolute right-20 bottom-10 h-96 w-96 rounded-full bg-accent blur-3xl" />
-      </div>
-      <Container className="relative">
+      {/* 3D Animated Background */}
+      <AnimatedBackground />
+      
+      {/* Subtle overlay for better text readability */}
+      <div className="absolute inset-0 bg-gradient-to-b from-primary/30 via-transparent to-primary/50" />
+      
+      <Container className="relative z-10">
         <AnimatedSection>
           <div className="mx-auto max-w-3xl text-center">
             <p className="mb-4 text-sm font-semibold tracking-wider text-secondary-light uppercase">
