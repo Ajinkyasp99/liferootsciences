@@ -114,13 +114,13 @@ function ResearchApproach() {
         />
         <div className="grid gap-8 md:grid-cols-3">
           {principles.map((p, i) => (
-            <AnimatedSection key={p.title} delay={i * 0.1}>
-              <div className="relative rounded-xl border border-neutral-200 bg-white p-8 shadow-sm">
-                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-full bg-primary text-sm font-bold text-white">
+            <AnimatedSection key={p.title} delay={i * 0.1} className="h-full">
+              <div className="flex h-full flex-col rounded-xl border border-neutral-200 bg-white p-8 shadow-sm">
+                <div className="mb-4 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-bold text-white">
                   {i + 1}
                 </div>
                 <h3 className="text-lg font-semibold text-primary">{p.title}</h3>
-                <p className="mt-3 text-neutral-500 leading-relaxed">{p.description}</p>
+                <p className="mt-3 flex-1 text-neutral-500 leading-relaxed">{p.description}</p>
               </div>
             </AnimatedSection>
           ))}
@@ -159,10 +159,10 @@ function ValueProposition() {
         />
         <div className="grid gap-8 md:grid-cols-3">
           {values.map((v, i) => (
-            <AnimatedSection key={v.title} delay={i * 0.1}>
-              <div className="rounded-xl border-l-4 border-secondary bg-white p-8 shadow-sm">
+            <AnimatedSection key={v.title} delay={i * 0.1} className="h-full">
+              <div className="flex h-full flex-col rounded-xl border-l-4 border-secondary bg-white p-8 shadow-sm">
                 <h3 className="text-lg font-semibold text-primary">{v.title}</h3>
-                <p className="mt-3 text-neutral-500 leading-relaxed">{v.description}</p>
+                <p className="mt-3 flex-1 text-neutral-500 leading-relaxed">{v.description}</p>
               </div>
             </AnimatedSection>
           ))}

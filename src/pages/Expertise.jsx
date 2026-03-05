@@ -25,20 +25,20 @@ function PageHeader() {
   )
 }
 
-function SkillCategory({ category, index }) {
+function SkillCategory({ category, index, fullWidth = false }) {
   return (
-    <AnimatedSection delay={index * 0.08}>
-      <div className="rounded-xl border border-neutral-200 bg-white p-8 shadow-sm">
+    <AnimatedSection delay={index * 0.08} className={`h-full ${fullWidth ? 'lg:col-span-2' : ''}`}>
+      <div className="flex h-full flex-col rounded-xl border border-neutral-200 bg-white p-8 shadow-sm">
         <div className="mb-5 flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-secondary/10 text-secondary">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-secondary/10 text-secondary">
             <category.icon size={20} />
           </div>
-          <div>
+          <div className="min-w-0">
             <h3 className="text-lg font-semibold text-primary">{category.title}</h3>
             <p className="text-sm text-neutral-400">{category.skills.length} skills</p>
           </div>
         </div>
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap content-start gap-2">
           {category.skills.map((skill) => (
             <Badge key={skill} color={category.color}>
               {skill}
@@ -51,6 +51,8 @@ function SkillCategory({ category, index }) {
 }
 
 export default function Expertise() {
+  const fullWidthIds = ['computational-biology', 'life-sciences']
+
   return (
     <>
       <PageHeader />
@@ -58,7 +60,12 @@ export default function Expertise() {
         <Container>
           <div className="grid gap-8 lg:grid-cols-2">
             {skillCategories.map((cat, i) => (
-              <SkillCategory key={cat.id} category={cat} index={i} />
+              <SkillCategory
+                key={cat.id}
+                category={cat}
+                index={i}
+                fullWidth={fullWidthIds.includes(cat.id)}
+              />
             ))}
           </div>
         </Container>

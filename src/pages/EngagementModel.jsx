@@ -10,6 +10,7 @@ import {
   FileText,
   BrainCircuit,
   Package,
+  BarChart3,
 } from 'lucide-react'
 
 function PageHeader() {
@@ -33,67 +34,96 @@ function PageHeader() {
   )
 }
 
-function EngagementTypes() {
+function PrimaryEngagement() {
+  return (
+    <section className="py-20">
+      <Container>
+        <AnimatedSection>
+          <div className="rounded-2xl bg-gradient-to-br from-primary to-primary-light p-8 text-white shadow-xl sm:p-12">
+            <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:gap-12">
+              <div className="lg:w-1/2">
+                <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-white/20 px-4 py-1.5 text-sm font-medium">
+                  <Package size={16} />
+                  Primary Focus
+                </div>
+                <h2 className="text-3xl font-bold sm:text-4xl">Data & AI Product Development</h2>
+                <p className="mt-4 text-lg text-white/80 leading-relaxed">
+                  Our core expertise lies in building end-to-end data pipelines, ML models, and 
+                  AI-driven tools tailored specifically for life sciences and healthcare applications. 
+                  We transform complex scientific challenges into scalable, intelligent solutions.
+                </p>
+                <Button 
+                  to="/services" 
+                  size="lg" 
+                  className="mt-6 text-primary hover:bg-neutral-100"
+                >
+                  Explore Services
+                </Button>
+              </div>
+              <div className="lg:w-1/2">
+                <div className="grid gap-4 sm:grid-cols-2">
+                  {[
+                    { icon: BrainCircuit, title: 'ML Model Development', desc: 'Custom models for prediction, classification, and pattern recognition' },
+                    { icon: Package, title: 'Data Pipeline Design', desc: 'Scalable ETL and data engineering for research workflows' },
+                    { icon: BarChart3, title: 'Predictive Analytics', desc: 'Forecasting and trend analysis for decision support' },
+                    { icon: FlaskConical, title: 'Custom AI Solutions', desc: 'Bespoke tools for your specific research needs' },
+                  ].map((item) => (
+                    <div key={item.title} className="rounded-xl bg-white/10 p-4 backdrop-blur-sm">
+                      <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-white/20">
+                        <item.icon size={20} />
+                      </div>
+                      <h3 className="font-semibold">{item.title}</h3>
+                      <p className="mt-1 text-sm text-white/70">{item.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </AnimatedSection>
+      </Container>
+    </section>
+  )
+}
+
+function SecondaryEngagements() {
   const types = [
     {
       icon: Handshake,
       title: 'Consulting',
       description:
-        'Strategic advisory for research design, data strategy, and AI integration. We help you define the right approach before committing resources.',
-      features: [
-        'Feasibility assessments',
-        'Research strategy',
-        'Technology selection',
-        'Study design review',
-      ],
+        'Strategic advisory for research design, data strategy, and AI integration. We help you define the right approach.',
+      features: ['Feasibility assessments', 'Research strategy', 'Technology selection'],
     },
     {
       icon: FlaskConical,
       title: 'Research Support',
       description:
-        'Hands-on support for ongoing research — from literature review and data analysis to manuscript preparation and visualization.',
-      features: [
-        'Literature review',
-        'Statistical analysis',
-        'Data visualization',
-        'Scientific writing',
-      ],
-    },
-    {
-      icon: BrainCircuit,
-      title: 'Data & AI Product Development',
-      description:
-        'End-to-end development of data pipelines, ML models, and AI-driven tools tailored to life sciences and healthcare applications.',
-      features: [
-        'ML model development',
-        'Data pipeline design',
-        'Predictive analytics',
-        'Custom AI solutions',
-      ],
+        'Hands-on support for ongoing research — from literature review to manuscript preparation.',
+      features: ['Literature review', 'Statistical analysis', 'Scientific writing'],
     },
   ]
 
   return (
-    <section className="py-20">
+    <section className="bg-neutral-50 py-16">
       <Container>
         <SectionHeading
-          overline="Engagement Options"
-          title="Choose Your Model"
-          subtitle="We adapt our approach to fit your needs — from lightweight advisory to full-scale research partnerships."
+          overline="Additional Services"
+          title="Also Available"
+          subtitle="Complementary engagement options to support your research journey."
         />
-        <div className="grid gap-8 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2">
           {types.map((type, i) => (
             <AnimatedSection key={type.title} delay={i * 0.1}>
-              <div className="flex h-full flex-col rounded-xl border border-neutral-200 bg-white p-8 shadow-sm transition-shadow hover:shadow-lg">
-                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-secondary/10 text-secondary">
+              <div className="flex h-full flex-col rounded-2xl bg-gradient-to-br from-primary to-primary-light p-8 text-white shadow-lg">
+                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-white/20">
                   <type.icon size={24} />
                 </div>
-                <h3 className="text-xl font-semibold text-primary">{type.title}</h3>
-                <p className="mt-3 flex-1 text-neutral-500 leading-relaxed">{type.description}</p>
-                <ul className="mt-6 space-y-2 border-t border-neutral-100 pt-6">
+                <h3 className="text-xl font-semibold">{type.title}</h3>
+                <p className="mt-3 text-white/80 leading-relaxed">{type.description}</p>
+                <ul className="mt-6 flex flex-wrap gap-2">
                   {type.features.map((f) => (
-                    <li key={f} className="flex items-start gap-2 text-sm text-neutral-600">
-                      <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-secondary" />
+                    <li key={f} className="rounded-full bg-white/20 px-4 py-1.5 text-sm font-medium text-white">
                       {f}
                     </li>
                   ))}
@@ -113,19 +143,19 @@ function ProcessTimeline() {
       icon: MessageSquare,
       title: 'Problem Understanding',
       description:
-        'We begin with a thorough consultation to understand your research question, data landscape, and desired outcomes. This phase ensures alignment before any work begins.',
+        'We begin with a thorough consultation to understand your research question, data landscape, and desired outcomes.',
       activities: [
         'Initial consultation & scoping',
         'Requirements gathering',
         'Feasibility assessment',
-        'Proposal & timeline development',
+        'Proposal development',
       ],
     },
     {
       icon: Search,
       title: 'Research & Analysis',
       description:
-        'Our team conducts literature review, data exploration, and preliminary analyses to build a solid foundation for the engagement.',
+        'Our team conducts literature review, data exploration, and preliminary analyses to build a solid foundation.',
       activities: [
         'Literature review & synthesis',
         'Data collection & cleaning',
@@ -137,7 +167,7 @@ function ProcessTimeline() {
       icon: FlaskConical,
       title: 'Modeling & Validation',
       description:
-        'We apply rigorous computational and statistical methods — building models, running simulations, and validating results against domain knowledge.',
+        'We apply rigorous computational and statistical methods — building models, running simulations, and validating results.',
       activities: [
         'Statistical / ML modeling',
         'Cross-validation & testing',
@@ -149,12 +179,12 @@ function ProcessTimeline() {
       icon: FileText,
       title: 'Delivery & Documentation',
       description:
-        'We deliver publication-ready outputs with full documentation — including reproducible code, detailed reports, and presentation-quality figures.',
+        'We deliver publication-ready outputs with full documentation — including reproducible code and detailed reports.',
       activities: [
         'Final report & documentation',
         'Data visualizations & figures',
         'Knowledge transfer',
-        'Ongoing support options',
+        'Ongoing support',
       ],
     },
   ]
@@ -165,33 +195,48 @@ function ProcessTimeline() {
         <SectionHeading
           overline="Our Process"
           title="From Question to Deliverable"
-          subtitle="A structured, four-phase workflow designed for reproducibility, rigor, and clear communication at every stage."
+          subtitle="A structured, four-phase workflow designed for reproducibility, rigor, and clear communication."
         />
-        <div className="mx-auto max-w-3xl">
+        <div className="grid gap-6 lg:grid-cols-4">
           {steps.map((step, i) => (
             <AnimatedSection key={step.title} delay={i * 0.1}>
-              <div className="relative flex gap-6 pb-12 last:pb-0">
-                {i < steps.length - 1 && (
-                  <div className="absolute top-14 left-6 h-[calc(100%-3.5rem)] w-px bg-neutral-300" />
-                )}
-                <div className="relative z-10 flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary text-white shadow-md">
-                  <step.icon size={20} />
+              <div className="group relative h-full overflow-hidden rounded-2xl bg-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+                {/* Step number badge */}
+                <div className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-neutral-100 text-sm font-bold text-neutral-400">
+                  {i + 1}
                 </div>
-                <div className="flex-1 pt-1">
-                  <div className="flex items-center gap-3">
-                    <span className="text-xs font-semibold text-secondary uppercase">Step {i + 1}</span>
+
+                <div className="p-6">
+                  {/* Icon - consistent with other pages */}
+                  <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-secondary/10 text-secondary">
+                    <step.icon size={28} />
                   </div>
-                  <h3 className="mt-1 text-xl font-semibold text-primary">{step.title}</h3>
-                  <p className="mt-2 text-neutral-500 leading-relaxed">{step.description}</p>
-                  <ul className="mt-4 grid gap-1.5 sm:grid-cols-2">
+
+                  {/* Content */}
+                  <h3 className="text-lg font-bold text-primary">{step.title}</h3>
+                  <p className="mt-2 text-sm text-neutral-500 leading-relaxed">{step.description}</p>
+
+                  {/* Activities as tags */}
+                  <div className="mt-4 flex flex-wrap gap-2">
                     {step.activities.map((a) => (
-                      <li key={a} className="flex items-start gap-2 text-sm text-neutral-600">
-                        <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-secondary" />
+                      <span 
+                        key={a} 
+                        className="rounded-lg bg-neutral-100 px-2.5 py-1 text-xs font-medium text-neutral-600"
+                      >
                         {a}
-                      </li>
+                      </span>
                     ))}
-                  </ul>
+                  </div>
                 </div>
+
+                {/* Connection arrow for desktop */}
+                {i < steps.length - 1 && (
+                  <div className="absolute -right-3 top-1/2 hidden -translate-y-1/2 text-neutral-300 lg:block">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                  </div>
+                )}
               </div>
             </AnimatedSection>
           ))}
@@ -215,7 +260,7 @@ function CTABand() {
                 Tell us about your research challenge and we will design the right engagement.
               </p>
             </div>
-            <Button to="/contact" size="lg" className="shrink-0 bg-white text-primary hover:bg-neutral-100">
+            <Button to="/contact" size="lg" className="shrink-0 text-primary hover:bg-neutral-100">
               Get in Touch
             </Button>
           </div>
@@ -229,7 +274,8 @@ export default function EngagementModel() {
   return (
     <>
       <PageHeader />
-      <EngagementTypes />
+      <PrimaryEngagement />
+      <SecondaryEngagements />
       <ProcessTimeline />
       <CTABand />
     </>
