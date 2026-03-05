@@ -32,7 +32,7 @@ function HeroSection() {
               <Button to="/services" size="lg">
                 Explore Services <ArrowRight size={18} />
               </Button>
-              <Button to="/contact" variant="secondary" size="lg" className="border-white/30 text-white hover:bg-white hover:text-primary">
+              <Button to="/contact" variant="secondary" size="lg" className="border-white/30 text-white hover:text-primary">
                 Contact Us
               </Button>
             </div>

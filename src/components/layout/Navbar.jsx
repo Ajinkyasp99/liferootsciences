@@ -18,11 +18,10 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 right-0 left-0 z-50 transition-all duration-300 ${
-        scrolled
+      className={`fixed top-0 right-0 left-0 z-50 transition-all duration-300 ${scrolled
           ? 'border-b border-neutral-200 bg-white/95 shadow-sm backdrop-blur-md'
           : 'bg-transparent'
-      }`}
+        }`}
     >
       <Container>
         <nav className="flex h-16 items-center justify-between sm:h-20">
@@ -40,11 +39,10 @@ export default function Navbar() {
               <Link
                 key={link.path}
                 to={link.path}
-                className={`rounded-md px-3 py-2 text-sm font-medium transition-colors ${
-                  normalizedPathname === link.path
+                className={`rounded-md px-3 py-2 text-sm font-medium transition-colors ${normalizedPathname === link.path
                     ? 'text-secondary'
                     : 'text-neutral-600 hover:text-primary'
-                }`}
+                  }`}
               >
                 {link.label}
               </Link>

@@ -261,7 +261,7 @@ function CTABand() {
               </p>
             </div>
             <Button to="/contact" size="lg" className="shrink-0 text-primary hover:bg-neutral-100">
-              Get in Touch
+              Start Project
             </Button>
           </div>
         </AnimatedSection>
