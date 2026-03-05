@@ -63,7 +63,7 @@ function ContactForm() {
     setSubmitError(null)
 
     try {
-      await fetch("https://script.google.com/macros/s/AKfycbw-QL84vKiTPfcB0oFXev684B-tCFgpCAOLuKTo9rifkphX33Knmzqj54TsWPkniIN7/exec", {
+      await fetch("https://script.google.com/macros/s/AKfycbxGcvOnYEjQKfPyGcL1DJVi8_J_pPeHVGkQJM-XxOhFPf3qxQW2r3C10myxqbNuOWfe/exec", {
         method: "POST",
         mode: "no-cors",
         headers: {
