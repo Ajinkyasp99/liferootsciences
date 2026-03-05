@@ -37,18 +37,21 @@ function ContactForm() {
   })
   const [errors, setErrors] = useState({})
   const [submitted, setSubmitted] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [submitError, setSubmitError] = useState(null)
 
   const validate = () => {
     const e = {}
     if (!form.name.trim()) e.name = 'Name is required'
     if (!form.email.trim()) e.email = 'Email is required'
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = 'Enter a valid email'
+    if (!form.industry) e.industry = 'Industry is required'
     if (!form.subject.trim()) e.subject = 'Subject is required'
     if (!form.message.trim()) e.message = 'Message is required'
     return e
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     const v = validate()
     if (Object.keys(v).length > 0) {
@@ -56,7 +59,35 @@ function ContactForm() {
       return
     }
     setErrors({})
-    setSubmitted(true)
+    setLoading(true)
+    setSubmitError(null)
+
+    try {
+      await fetch("https://script.google.com/macros/s/AKfycbw-QL84vKiTPfcB0oFXev684B-tCFgpCAOLuKTo9rifkphX33Knmzqj54TsWPkniIN7/exec", {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8",
+        },
+        body: JSON.stringify({
+          fullName: form.name,
+          email: form.email,
+          organization: form.organization,
+          industry: form.industry,
+          subject: form.subject,
+          message: form.message
+        })
+      });
+
+      // Google Apps Script no-cors mode results in an opaque response.
+      // We assume success if the fetch doesn't throw.
+      setSubmitted(true)
+    } catch (err) {
+      console.error("Submission error:", err)
+      setSubmitError("Something went wrong. Please try again or contact us directly.")
+    } finally {
+      setLoading(false)
+    }
   }
 
   const handleChange = (field) => (e) => {
@@ -79,12 +110,16 @@ function ContactForm() {
   }
 
   const fieldClasses = (field) =>
-    `w-full rounded-lg border px-4 py-3 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-secondary/30 focus:border-secondary ${
-      errors[field] ? 'border-red-300 bg-red-50' : 'border-neutral-300 bg-white'
+    `w-full rounded-lg border px-4 py-3 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-secondary/30 focus:border-secondary ${errors[field] ? 'border-red-300 bg-red-50' : 'border-neutral-300 bg-white'
     }`
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5" noValidate>
+      {submitError && (
+        <div className="rounded-lg bg-red-50 p-4 text-sm text-red-600 border border-red-100">
+          {submitError}
+        </div>
+      )}
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
           <label className="mb-1.5 block text-sm font-medium text-neutral-700">
@@ -95,6 +130,7 @@ function ContactForm() {
             value={form.name}
             onChange={handleChange('name')}
             placeholder="Your name"
+            disabled={loading}
             className={fieldClasses('name')}
           />
           {errors.name && <p className="mt-1 text-xs text-red-500">{errors.name}</p>}
@@ -108,6 +144,7 @@ function ContactForm() {
             value={form.email}
             onChange={handleChange('email')}
             placeholder="you@example.com"
+            disabled={loading}
             className={fieldClasses('email')}
           />
           {errors.email && <p className="mt-1 text-xs text-red-500">{errors.email}</p>}
@@ -122,14 +159,18 @@ function ContactForm() {
             value={form.organization}
             onChange={handleChange('organization')}
             placeholder="Company or institution"
+            disabled={loading}
             className={fieldClasses('organization')}
           />
         </div>
         <div>
-          <label className="mb-1.5 block text-sm font-medium text-neutral-700">Industry</label>
+          <label className="mb-1.5 block text-sm font-medium text-neutral-700">
+            Industry <span className="text-red-400">*</span>
+          </label>
           <select
             value={form.industry}
             onChange={handleChange('industry')}
+            disabled={loading}
             className={fieldClasses('industry')}
           >
             <option value="">Select an industry</option>
@@ -139,6 +180,7 @@ function ContactForm() {
             <option value="Academic / Research">Academic / Research</option>
             <option value="Other">Other</option>
           </select>
+          {errors.industry && <p className="mt-1 text-xs text-red-500">{errors.industry}</p>}
         </div>
       </div>
 
@@ -151,6 +193,7 @@ function ContactForm() {
           value={form.subject}
           onChange={handleChange('subject')}
           placeholder="How can we help?"
+          disabled={loading}
           className={fieldClasses('subject')}
         />
         {errors.subject && <p className="mt-1 text-xs text-red-500">{errors.subject}</p>}
@@ -165,13 +208,24 @@ function ContactForm() {
           value={form.message}
           onChange={handleChange('message')}
           placeholder="Tell us about your project or research challenge..."
+          disabled={loading}
           className={fieldClasses('message')}
         />
         {errors.message && <p className="mt-1 text-xs text-red-500">{errors.message}</p>}
       </div>
 
-      <Button type="submit" size="lg" className="w-full sm:w-auto">
-        Send Inquiry
+      <Button type="submit" size="lg" className="w-full sm:w-auto" disabled={loading}>
+        {loading ? (
+          <span className="flex items-center gap-2">
+            <svg className="animate-spin h-4 w-4 text-white" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+            </svg>
+            Sending...
+          </span>
+        ) : (
+          'Send Inquiry'
+        )}
       </Button>
     </form>
   )
